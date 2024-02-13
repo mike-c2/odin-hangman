@@ -9,8 +9,14 @@ class Hangman
   NUMBER_OF_CHANCES = 7
 
   def initialize
+    restart
+  end
+
+  def restart
     @overall_letters_chosen = ''
     @wrong_letters_chosen = ''
+
+    prepare_game_word
   end
 
   def prepare_game_word
