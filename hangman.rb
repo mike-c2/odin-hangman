@@ -6,6 +6,7 @@ class Hangman
   DICTIONARY_FILE = 'google-10000-english-no-swears.txt'
   MINIMUM_WORD_SIZE = 5
   MAXIMUM_WORD_SIZE = 12
+  NUMBER_OF_CHANCES = 7
 
   def initialize
     @overall_letters_chosen = ''
