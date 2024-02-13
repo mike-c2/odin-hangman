@@ -13,6 +13,14 @@ class Hangman
     @wrong_letters_chosen = ''
   end
 
+  def prepare_game_word
+    word = self.class.select_word
+
+    @secret_letters = word.split('').map do |letter|
+      { letter: letter, visible: false }
+    end
+  end
+
   def self.select_word
     return nil unless File.exist?(DICTIONARY_FILE) && File.readable?(DICTIONARY_FILE)
 
