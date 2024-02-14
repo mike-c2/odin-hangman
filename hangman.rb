@@ -137,6 +137,17 @@ class Hangman
   end
 end
 
+def print_options
+  puts "\nDuring the game, you will have these options:\n\n"
+  puts '  Help: Print out these options again.'
+  puts '  Print:  Prints out the game board.'
+  puts '  Quit: Leave the game.'
+  puts '  Restart:  Start the game over.'
+  puts '  Save:  Save the game to file.'
+  puts "  Load:  Load a game that was previously saved and continue playing that.\n\n"
+  puts "These words can be typed at anytime and they are case insensitive.\n\n"
+end
+
 def print_instructions
   puts "\nWelcome to the Hangman game!\n\n"
   puts 'A random word is selected and masked. You will be given'
@@ -152,6 +163,7 @@ end
 
 game = Hangman.new
 
+print_options
 print_instructions
 
 game.play(gets.chomp) until game.win? || game.lose?
