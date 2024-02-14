@@ -30,19 +30,30 @@ class Hangman
   def play(letter)
     return unless letter_valid?(letter)
 
-    letter = letter.upcase
-
-    correct = @secret_letters.reduce(false) do |found, secret_letter|
-      found || secret_letter[:visible] = letter == secret_letter[:letter]
-    end
+    process_play(letter)
 
     @overall_letters_chosen += letter
-    @wrong_letters_chosen += letter unless correct
 
     print_game
 
     puts 'Congratulations, you won the game!' if win?
     puts 'You lost the game' if lose?
+  end
+
+  def process_play(letter)
+    letter = letter.upcase
+    correct = false
+
+    @secret_letters.map! do |secret_letter|
+      unless secret_letter[:visible]
+        secret_letter[:visible] = letter == secret_letter[:letter]
+        correct ||= secret_letter[:visible]
+      end
+
+      secret_letter
+    end
+
+    @wrong_letters_chosen += letter unless correct
   end
 
   def letter_valid?(letter)
