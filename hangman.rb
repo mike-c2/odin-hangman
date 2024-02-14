@@ -41,6 +41,12 @@ class Hangman
     words.sample
   end
 
+  def print_game
+    puts "Wrong Answers Remaining: #{NUMBER_OF_CHANCES - @wrong_letters_chosen.length}\n\n"
+    puts "Wrong letters selected during this game: #{@wrong_letters_chosen.split('').join(' ')}\n\n"
+    puts "Guess this word:  #{display_secret_word}\n\n"
+  end
+
   def display_secret_word
     @secret_letters.reduce('') do |word, letter|
       word += (letter[:visible] ? letter[:letter] : '_')
