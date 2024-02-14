@@ -41,6 +41,13 @@ class Hangman
     words.sample
   end
 
+  def display_secret_word
+    @secret_letters.reduce('') do |word, letter|
+      word += (letter[:visible] ? letter[:letter] : '_')
+      "#{word} "
+    end
+  end
+
   def self.read_dictionary
     return default_word unless File.exist?(DICTIONARY_FILE) && File.readable?(DICTIONARY_FILE)
 
