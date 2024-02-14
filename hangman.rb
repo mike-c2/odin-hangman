@@ -17,6 +17,8 @@ class Hangman
     @wrong_letters_chosen = ''
 
     prepare_game_word
+
+    self.class.print_instructions
   end
 
   def prepare_game_word
@@ -59,5 +61,18 @@ class Hangman
     puts "Using default word, but you will want to fix that.\n\n"
 
     ['JAZZED']
+  end
+
+  def self.print_instructions
+    puts "\nWelcome to the Hangman game!\n\n"
+    puts 'A random word is selected and masked. You will be given'
+    puts "#{NUMBER_OF_CHANCES} chances to guess it. For each turn, enter a letter and"
+    puts 'if correct, it will open up the letter on the board. If'
+    puts 'wrong, the letter will be shown on the "Wrong Letters"'
+    puts "list and the \"Wrong Answers Remaining\" will be deducted.\n\n"
+    puts 'If you guess all of the correct letters in the word, you'
+    puts 'will win.  If you exhaust all of your "Wrong Answers'
+    puts "Remaining\" then you will lose.\n\n"
+    puts "Now choose a letter, lower/uppercase does not matter:\n\n"
   end
 end
