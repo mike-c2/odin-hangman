@@ -30,6 +30,7 @@ class Hangman
   def play(letter)
     return unless letter_valid?(letter)
 
+    letter = letter.upcase
     process_play(letter)
 
     @overall_letters_chosen += letter
@@ -41,7 +42,6 @@ class Hangman
   end
 
   def process_play(letter)
-    letter = letter.upcase
     correct = false
 
     @secret_letters.map! do |secret_letter|
