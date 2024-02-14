@@ -41,6 +41,10 @@ class Hangman
     words.sample
   end
 
+  def win?
+    @secret_letters.all? { |letter| letter[:visible] }
+  end
+
   def print_game
     puts "Wrong Answers Remaining: #{NUMBER_OF_CHANCES - @wrong_letters_chosen.length}\n\n"
     puts "Wrong letters selected during this game: #{@wrong_letters_chosen.split('').join(' ')}\n\n"
