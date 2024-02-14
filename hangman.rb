@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'json'
+
 ##
 # This class will be used to play the Hangman game
 class Hangman
@@ -138,11 +140,37 @@ class Hangman
 end
 
 ##
+# Version of Hangman class that can be
+# converted to and from JSON format.
+class HangmanSerial < Hangman
+  attr_accessor :overall_letters_chosen, :wrong_letters_chosen, :secret_word, :secret_letters
+
+  def to_json(*_args)
+    { 'overall_letters_chosen' => @overall_letters_chosen,
+      'wrong_letters_chosen' => @wrong_letters_chosen,
+      'secret_word' => @secret_word,
+      'secret_letters' => @secret_letters }.to_json
+  end
+
+  def self.from_json(string)
+    data = JSON.parse(string)
+
+    hangman = new
+    hangman.overall_letters_chosen = data['overall_letters_chosen']
+    hangman.wrong_letters_chosen = data['wrong_letters_chosen']
+    hangman.secret_word = data['secret_word']
+    hangman.secret_letters = data['secret_letters']
+
+    hangman
+  end
+end
+
+##
 # This class will manage the game and
 # the player options.
 class GameManager
   def initialize
-    @hangman = Hangman.new
+    @hangman = HangmanSerial.new
 
     self.class.print_options
     self.class.print_instructions
