@@ -29,6 +29,24 @@ class Hangman
     end
   end
 
+  def play(letter)
+    return unless letter_valid?(letter)
+
+    letter = letter.upcase
+
+    correct = @secret_letters.reduce(false) do |found, secret_letter|
+      found || secret_letter[:visible] = letter == secret_letter[:letter]
+    end
+
+    @overall_letters_chosen += letter
+    @wrong_letters_chosen += letter unless correct
+
+    print_game
+
+    puts 'Congratulations, you won the game!' if win?
+    puts 'You lost the game' if lose?
+  end
+
   def letter_valid?(letter)
     if win? || lose?
       puts 'The game is over, no more letters are allowed.'
