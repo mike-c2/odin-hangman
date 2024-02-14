@@ -20,9 +20,9 @@ class Hangman
   end
 
   def prepare_game_word
-    word = self.class.select_word
+    @secret_word = self.class.select_word
 
-    @secret_letters = word.split('').map do |letter|
+    @secret_letters = @secret_word.split('').map do |letter|
       { letter: letter, visible: false }
     end
   end
@@ -37,7 +37,7 @@ class Hangman
     print_game
 
     puts 'Congratulations, you won the game!' if win?
-    puts 'You lost the game' if lose?
+    puts "You lost the game, the correct word was: #{@secret_word}" if lose?
   end
 
   def process_play(letter)
