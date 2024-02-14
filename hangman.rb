@@ -41,6 +41,20 @@ class Hangman
     words.sample
   end
 
+  def letter_valid?(letter)
+    if win? || lose?
+      puts 'The game is over, no more letters are allowed.'
+      return false
+    end
+
+    unless letter.is_a?(String) && letter.match(/^[a-zA-Z]$/)
+      puts 'What you entered is not valid, try again'
+      return false
+    end
+
+    true
+  end
+
   def win?
     @secret_letters.all? { |letter| letter[:visible] }
   end
