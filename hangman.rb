@@ -28,11 +28,7 @@ class Hangman
   end
 
   def self.select_word
-    return default_word unless File.exist?(DICTIONARY_FILE) && File.readable?(DICTIONARY_FILE)
-
-    all_words = File.readlines(DICTIONARY_FILE).map do |word|
-      word.chomp.upcase
-    end
+    all_words = read_dictionary
 
     words = all_words.filter do |word|
       word.length.between?(MINIMUM_WORD_SIZE, MAXIMUM_WORD_SIZE)
@@ -43,11 +39,25 @@ class Hangman
     words.sample
   end
 
+  def self.read_dictionary
+    return default_word unless File.exist?(DICTIONARY_FILE) && File.readable?(DICTIONARY_FILE)
+
+    begin
+      words = File.readlines(DICTIONARY_FILE).map do |word|
+        word.chomp.upcase
+      end
+    rescue Errno
+      return default_word
+    end
+
+    words
+  end
+
   def self.default_word
     puts "\nA problem occurred with reading the dictionary file:\n\n"
     puts "  #{DICTIONARY_FILE}\n\n"
     puts "Using default word, but you will want to fix that.\n\n"
 
-    'JAZZ'
+    ['JAZZED']
   end
 end
