@@ -58,7 +58,7 @@ class Hangman
 
   def letter_valid?(letter)
     if win? || lose?
-      puts 'The game is over, no more letters are allowed.'
+      puts 'The game is over, no more letters are allowed.  Restart the game to play again.'
       return false
     end
 
