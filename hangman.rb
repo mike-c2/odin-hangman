@@ -137,33 +137,67 @@ class Hangman
   end
 end
 
-def print_options
-  puts "\nDuring the game, you will have these options:\n\n"
-  puts '  Help: Print out these options again.'
-  puts '  Print:  Prints out the game board.'
-  puts '  Quit: Leave the game.'
-  puts '  Restart:  Start the game over.'
-  puts '  Save:  Save the game to file.'
-  puts "  Load:  Load a game that was previously saved and continue playing that.\n\n"
-  puts "These words can be typed at anytime and they are case insensitive.\n\n"
+##
+# This class will manage the game and
+# the player options.
+class GameManager
+  def initialize
+    @hangman = Hangman.new
+
+    self.class.print_options
+    self.class.print_instructions
+    @hangman.print_game
+  end
+
+  def play_game
+    loop do
+      play_input = gets.chomp.upcase
+
+      case play_input
+      when 'HELP'
+        self.class.print_options
+      when 'PRINT'
+        @hangman.print_game
+      when 'QUIT'
+        break
+      when 'RESTART'
+        @hangman.restart
+        self.class.print_instructions
+        @hangman.print_game
+      when 'SAVE'
+        puts 'Save has not been implemented yet.'
+      when 'LOAD'
+        puts 'Load has not been implemented yet.'
+      else
+        @hangman.play(play_input)
+      end
+    end
+  end
+
+  def self.print_options
+    puts "\nDuring the game, you will have these options:\n\n"
+    puts '  Help: Print out these options again.'
+    puts '  Print:  Prints out the game board.'
+    puts '  Quit: Leave the game.'
+    puts '  Restart:  Start the game over.'
+    puts '  Save:  Save the game to file.'
+    puts "  Load:  Load a game that was previously saved and continue playing that.\n\n"
+    puts "These words can be typed at anytime and they are case insensitive.\n\n"
+  end
+
+  def self.print_instructions
+    puts "\nWelcome to the Hangman game!\n\n"
+    puts 'A random word is selected and masked. You will be given'
+    puts "#{Hangman::NUMBER_OF_CHANCES} chances to guess it. For each turn, enter a letter and"
+    puts 'if correct, it will open up the letter on the board. If'
+    puts 'wrong, the letter will be shown on the "Wrong Letters"'
+    puts "list and the \"Wrong Answers Remaining\" will be deducted.\n\n"
+    puts 'If you guess all of the correct letters in the word, you'
+    puts 'will win.  If you exhaust all of your "Wrong Answers'
+    puts "Remaining\" then you will lose.\n\n"
+    puts "Now choose a letter, lower/uppercase does not matter.\n\n"
+  end
 end
 
-def print_instructions
-  puts "\nWelcome to the Hangman game!\n\n"
-  puts 'A random word is selected and masked. You will be given'
-  puts "#{Hangman::NUMBER_OF_CHANCES} chances to guess it. For each turn, enter a letter and"
-  puts 'if correct, it will open up the letter on the board. If'
-  puts 'wrong, the letter will be shown on the "Wrong Letters"'
-  puts "list and the \"Wrong Answers Remaining\" will be deducted.\n\n"
-  puts 'If you guess all of the correct letters in the word, you'
-  puts 'will win.  If you exhaust all of your "Wrong Answers'
-  puts "Remaining\" then you will lose.\n\n"
-  puts "Now choose a letter, lower/uppercase does not matter.\n\n"
-end
-
-game = Hangman.new
-
-print_options
-print_instructions
-
-game.play(gets.chomp) until game.win? || game.lose?
+game = GameManager.new
+game.play_game
