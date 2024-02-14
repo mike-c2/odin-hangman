@@ -158,7 +158,7 @@ class GameManager
         self.class.print_options
       when 'PRINT'
         @hangman.print_game
-      when 'QUIT'
+      when 'QUIT', 'EXIT'
         break
       when 'RESTART'
         @hangman.restart
@@ -179,6 +179,7 @@ class GameManager
     puts '  Help: Print out these options again.'
     puts '  Print:  Prints out the game board.'
     puts '  Quit: Leave the game.'
+    puts '  Exit: Leave the game (same as Quit).'
     puts '  Restart:  Start the game over.'
     puts '  Save:  Save the game to file.'
     puts "  Load:  Load a game that was previously saved and continue playing that.\n\n"
