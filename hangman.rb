@@ -29,18 +29,6 @@ class Hangman
     end
   end
 
-  def self.select_word
-    all_words = read_dictionary
-
-    words = all_words.filter do |word|
-      word.length.between?(MINIMUM_WORD_SIZE, MAXIMUM_WORD_SIZE)
-    end
-
-    return default_word if words.empty?
-
-    words.sample
-  end
-
   def letter_valid?(letter)
     if win? || lose?
       puts 'The game is over, no more letters are allowed.'
@@ -85,6 +73,18 @@ class Hangman
       word += (letter[:visible] ? letter[:letter] : '_')
       "#{word} "
     end
+  end
+
+  def self.select_word
+    all_words = read_dictionary
+
+    words = all_words.filter do |word|
+      word.length.between?(MINIMUM_WORD_SIZE, MAXIMUM_WORD_SIZE)
+    end
+
+    return default_word if words.empty?
+
+    words.sample
   end
 
   def self.read_dictionary
