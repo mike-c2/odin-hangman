@@ -86,6 +86,6 @@ class Hangman
     puts 'If you guess all of the correct letters in the word, you'
     puts 'will win.  If you exhaust all of your "Wrong Answers'
     puts "Remaining\" then you will lose.\n\n"
-    puts "Now choose a letter, lower/uppercase does not matter:\n\n"
+    puts "Now choose a letter, lower/uppercase does not matter.\n\n"
   end
 end
