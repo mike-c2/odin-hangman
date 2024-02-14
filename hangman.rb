@@ -149,3 +149,9 @@ def print_instructions
   puts "Remaining\" then you will lose.\n\n"
   puts "Now choose a letter, lower/uppercase does not matter.\n\n"
 end
+
+game = Hangman.new
+
+print_instructions
+
+game.play(gets.chomp) until game.win? || game.lose?
