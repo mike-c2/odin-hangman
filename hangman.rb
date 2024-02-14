@@ -52,7 +52,18 @@ class Hangman
       return false
     end
 
-    true
+    !duplicate_letter?(letter)
+  end
+
+  def duplicate_letter?(letter)
+    letter = letter.upcase
+
+    if @overall_letters_chosen.include?(letter)
+      puts "The #{letter} has already been called.\n\n"
+      return true
+    end
+
+    false
   end
 
   def win?
