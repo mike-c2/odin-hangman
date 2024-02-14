@@ -23,7 +23,7 @@ class Hangman
     @secret_word = self.class.select_word
 
     @secret_letters = @secret_word.split('').map do |letter|
-      { letter: letter, visible: false }
+      { 'letter' => letter, 'visible' => false }
     end
   end
 
@@ -45,9 +45,9 @@ class Hangman
     correct = false
 
     @secret_letters.map! do |secret_letter|
-      unless secret_letter[:visible]
-        secret_letter[:visible] = letter == secret_letter[:letter]
-        correct ||= secret_letter[:visible]
+      unless secret_letter['visible']
+        secret_letter['visible'] = letter == secret_letter['letter']
+        correct ||= secret_letter['visible']
       end
 
       secret_letter
@@ -82,7 +82,7 @@ class Hangman
   end
 
   def win?
-    @secret_letters.all? { |letter| letter[:visible] }
+    @secret_letters.all? { |letter| letter['visible'] }
   end
 
   def lose?
@@ -97,7 +97,7 @@ class Hangman
 
   def display_secret_word
     @secret_letters.reduce('') do |word, letter|
-      word += (letter[:visible] ? letter[:letter] : '_')
+      word += (letter['visible'] ? letter['letter'] : '_')
       "#{word} "
     end
   end
