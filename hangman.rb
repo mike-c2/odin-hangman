@@ -17,8 +17,6 @@ class Hangman
     @wrong_letters_chosen = ''
 
     prepare_game_word
-
-    self.class.print_instructions
   end
 
   def prepare_game_word
