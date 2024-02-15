@@ -143,7 +143,7 @@ end
 # Version of Hangman class that can be
 # converted to and from JSON format.
 class HangmanSerial < Hangman
-  attr_accessor :overall_letters_chosen, :wrong_letters_chosen, :secret_word, :secret_letters
+  attr_writer :overall_letters_chosen, :wrong_letters_chosen, :secret_word, :secret_letters
 
   def to_json(*_args)
     { 'overall_letters_chosen' => @overall_letters_chosen,
@@ -169,6 +169,8 @@ end
 # This class will manage the game and
 # the player options.
 class GameManager
+  SAVE_DIRECTORY = "#{__dir__}/save_files"
+
   def initialize
     @hangman = HangmanSerial.new
 
@@ -193,13 +195,40 @@ class GameManager
         self.class.print_instructions
         @hangman.print_game
       when 'SAVE'
-        puts 'Save has not been implemented yet.'
+        save_game
       when 'LOAD'
         puts 'Load has not been implemented yet.'
       else
         @hangman.play(play_input)
       end
     end
+  end
+
+  def save_game
+    print_save_files
+
+    puts 'Current game will be saved to a file, enter the file name:'
+
+    file_name = "#{SAVE_DIRECTORY}/#{gets.chomp}"
+
+    begin
+      File.write(file_name, @hangman.to_json)
+      puts "#{file_name} was saved.\n\n"
+    rescue SystemCallError => e
+      puts "Failed to save file: #{file_name}:\n\n#{e}\n\n"
+    end
+  end
+
+  def print_save_files
+    check_save_directory
+
+    puts "Current Files in Save Directory #{SAVE_DIRECTORY}:\n\n"
+    puts Dir.entries(SAVE_DIRECTORY)
+    puts "\n\n"
+  end
+
+  def check_save_directory
+    Dir.mkdir SAVE_DIRECTORY unless Dir.exist?(SAVE_DIRECTORY)
   end
 
   def self.print_options
