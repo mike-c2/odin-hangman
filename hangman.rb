@@ -197,7 +197,7 @@ class GameManager
       when 'SAVE'
         save_game
       when 'LOAD'
-        puts 'Load has not been implemented yet.'
+        load_game
       else
         @hangman.play(play_input)
       end
@@ -216,6 +216,24 @@ class GameManager
       puts "#{file_name} was saved.\n\n"
     rescue SystemCallError => e
       puts "Failed to save file: #{file_name}:\n\n#{e}\n\n"
+    end
+  end
+
+  def load_game
+    print_save_files
+
+    puts 'Enter the name of the file that you would like to load:'
+
+    file_name = "#{SAVE_DIRECTORY}/#{gets.chomp}"
+    backup_hangman = @hangman
+
+    begin
+      @hangman = HangmanSerial.from_json(File.read(file_name))
+      puts "#{file_name} was loaded.\n\n"
+      @hangman.print_game
+    rescue SystemCallError, JSON::ParserError, NoMethodError => e
+      @hangman = backup_hangman
+      puts "Failed to load file: #{file_name}:\n\n#{e}\n\n"
     end
   end
 
